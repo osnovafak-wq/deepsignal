@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Почти готово — Deep Signal Autoposter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="center">
+    <header class="top">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="name">Deep Signal Autoposter<small>подключение TikTok</small></div>
+    </header>
+
+    <div class="card" id="ok" hidden>
+      <div class="status">✓ TikTok разрешил доступ</div>
+      <h1>Почти готово</h1>
+      <p>Нажми «Скопировать», вернись в Telegram и отправь скопированное боту <b>одним сообщением</b>.</p>
+      <button class="btn" id="copy" type="button">Скопировать</button>
+      <a class="btn ghost" id="back" hidden>Вернуться в Telegram</a>
+      <p class="muted small">Код одноразовый и живёт несколько минут — не тяни. Никому, кроме своего бота, его не отправляй.</p>
+      <details id="manual">
+        <summary>Не копируется?</summary>
+        <p class="small">Выдели текст ниже целиком и скопируй вручную:</p>
+        <textarea id="raw" readonly></textarea>
+      </details>
+      <p class="en">Almost done: copy this link and send it to your Deep Signal Autoposter bot in Telegram.</p>
+    </div>
+
+    <div class="card" id="err" hidden>
+      <div class="status err">✕ Вход не завершён</div>
+      <h1>TikTok не дал доступ</h1>
+      <p id="errtext" class="muted"></p>
+      <p>Вернись в бота: «Аккаунт и режим» → «Подключить TikTok» — и попробуй ещё раз.</p>
+      <a class="btn ghost" id="back2" hidden>Вернуться в Telegram</a>
+      <p class="en">Sign-in was not completed. Go back to the bot and try again.</p>
+    </div>
+
+    <div class="card" id="empty" hidden>
+      <h1>Страница входа</h1>
+      <p class="muted">Сюда TikTok возвращает после входа из бота Deep Signal Autoposter.
+        Чтобы подключить TikTok, открой бота → «Аккаунт и режим» → «Подключить TikTok».</p>
+      <p class="en">This is the TikTok sign-in return page of Deep Signal Autoposter. <a href="./">About the app</a></p>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var q = new URLSearchParams(window.location.search);
+  var code = q.get("code");
+  var error = q.get("error");
+  var state = q.get("state") || "";
+  var m = state.match(/\.([A-Za-z0-9_]{5,32})$/);
+  var botUrl = m ? "https://t.me/" + m[1] : null;
+
+  function show(id) { document.getElementById(id).hidden = false; }
+  function link(id) {
+    if (!botUrl) return;
+    var a = document.getElementById(id);
+    a.href = botUrl;
+    a.hidden = false;
+  }
+
+  if (error) {
+    var desc = q.get("error_description") || error;
+    document.getElementById("errtext").textContent = desc === "access_denied" || error === "access_denied"
+      ? "Ты отменил вход или не дал разрешение." : "Ответ TikTok: " + desc;
+    show("err");
+    link("back2");
+    return;
+  }
+  if (!code) { show("empty"); return; }
+
+  var text = window.location.href;
+  var raw = document.getElementById("raw");
+  raw.value = text;
+  show("ok");
+  link("back");
+
+  var btn = document.getElementById("copy");
+  function done() {
+    btn.textContent = "Скопировано ✓ — теперь отправь боту";
+  }
+  function fallback() {
+    raw.focus();
+    raw.select();
+    raw.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    if (ok) { done(); } else { document.getElementById("manual").open = true; }
+  }
+  btn.addEventListener("click", function () {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  });
+})();
+</script>
+</body>
+</html>

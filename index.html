@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Signal Autoposter</title>
+<meta name="description" content="Schedule and publish TikTok videos from Telegram with the official TikTok Content Posting API.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo" aria-hidden="true"></div>
+    <div class="name">Deep Signal Autoposter<small>Telegram → TikTok scheduler</small></div>
+    <nav class="links">
+      <a href="./" aria-current="page">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </nav>
+  </header>
+
+  <h1>Schedule TikTok videos right from Telegram</h1>
+  <p class="lead">Deep Signal Autoposter is a scheduling tool built for the Deep Signal science channel
+    (TikTok <b>@deepsignal.space</b>). The creator sends a video to a private Telegram bot, writes a caption,
+    picks the post settings and the time — and at that time the video is uploaded to TikTok through the
+    official TikTok Content Posting API.</p>
+
+  <h2>How it works</h2>
+  <div class="grid">
+    <div class="card step"><span class="n">1</span><b>Connect TikTok</b>
+      The creator signs in with TikTok (Login Kit) and approves access. The bot shows which TikTok account is connected.</div>
+    <div class="card step"><span class="n">2</span><b>Send a video</b>
+      Send a video and a caption (up to 2,200 characters, hashtags included) to the Telegram bot.</div>
+    <div class="card step"><span class="n">3</span><b>Choose settings</b>
+      Who can view the video (no default — the creator always chooses), comments, Duet, Stitch, AI-generated
+      content label, commercial content disclosure, cover frame and the publish time.</div>
+    <div class="card step"><span class="n">4</span><b>Review &amp; schedule</b>
+      Before scheduling the bot shows a full preview with the TikTok nickname and the
+      <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" rel="noopener">Music Usage Confirmation</a> notice.
+      At the chosen time the video is posted (or sent to the TikTok inbox as a draft) and the bot reports the result.</div>
+  </div>
+
+  <h2>Posting modes</h2>
+  <div class="card">
+    <ul>
+      <li><b>Send me the file</b> — at the scheduled time the bot sends the video and caption back to the creator, who posts manually. No TikTok access is used.</li>
+      <li><b>TikTok drafts</b> — the bot uploads the video to the creator's TikTok inbox (<code>video.upload</code>); the creator finishes and posts it in the TikTok app.</li>
+      <li><b>Direct post</b> — the bot publishes the video with the creator's chosen settings (<code>video.publish</code>) and sends the link.</li>
+    </ul>
+  </div>
+
+  <h2>Data &amp; privacy</h2>
+  <p>We only use what is needed to post on the creator's behalf: TikTok open ID, display name and access tokens.
+    Videos are kept only until they are uploaded. Nothing is sold or shared with third parties.
+    Access can be revoked at any time with “Disconnect TikTok” in the bot. Read the
+    <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</p>
+
+  <footer>
+    Deep Signal Autoposter is an independent tool and is not affiliated with, endorsed or sponsored by TikTok or ByteDance.
+    Contact: <a href="mailto:your.email@example.com">your.email@example.com</a>
+  </footer>
+</div>
+</body>
+</html>
